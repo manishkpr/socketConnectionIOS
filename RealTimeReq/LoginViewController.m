@@ -58,8 +58,8 @@
 }
 
 - (IBAction)bt_loginClicked:(id)sender {
-    self.txt_password.text =@"password";
-    self.txt_user.text =@"password@gmail.com";
+//    self.txt_password.text =@"password";
+//    self.txt_user.text =@"password@gmail.com";
     [self showMBProcess];
     if (![AppUtility isNetworkAvailable]) {
         [self hideMBProcess];
