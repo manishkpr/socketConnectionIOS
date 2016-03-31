@@ -1,0 +1,24 @@
+
+/* Class = "UIButton"; normalTitle = "CREATE ACCOUNT"; ObjectID = "00j-sT-w9s"; */
+"00j-sT-w9s.normalTitle" = "CREATE ACCOUNT";
+
+/* Class = "UIButton"; normalTitle = "LOGIN"; ObjectID = "3VT-bX-gzr"; */
+"3VT-bX-gzr.normalTitle" = "LOGIN";
+
+/* Class = "UITextField"; placeholder = "UserName"; ObjectID = "NO9-ov-3Xb"; */
+"NO9-ov-3Xb.placeholder" = "UserName";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "OjQ-PQ-GWr"; */
+"OjQ-PQ-GWr.placeholder" = "Password";
+
+/* Class = "UITextField"; placeholder = "UserName"; ObjectID = "R4y-AP-gg9"; */
+"R4y-AP-gg9.placeholder" = "UserName";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "YB4-X2-6FD"; */
+"YB4-X2-6FD.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "d4p-S2-1yO"; */
+"d4p-S2-1yO.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "SIGN UP "; ObjectID = "xgo-1Y-GxW"; */
+"xgo-1Y-GxW.normalTitle" = "SIGN UP ";

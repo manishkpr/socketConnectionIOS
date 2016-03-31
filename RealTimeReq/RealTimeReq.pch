@@ -1,0 +1,48 @@
+//
+//  RealTimeReq.pch
+//  RealTimeReq
+//
+//  Created by admin on 3/31/16.
+//  Copyright © 2016 admin. All rights reserved.
+//
+#import <Availability.h>
+
+#ifndef RealTimeReq_pch
+#define RealTimeReq_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#ifndef __IPHONE_8_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#endif
+
+#define StringFormat(karg,...)  [NSString stringWithFormat:(karg),##__VA_ARGS__]
+
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "RealTimeReqDefine.h"
+
+/*  Vender API  */
+
+#import "MBProgressHUD.h"
+#import "MFSideMenu.h"
+
+
+/*  Custom Controls */
+#import "AppDelegate.h"
+#import "BaseViewController.h"
+
+/*  Utility API */
+#import "ShareData.h"
+#import "AppUtility.h"
+
+
+#endif /* RealTimeReq_pch */
