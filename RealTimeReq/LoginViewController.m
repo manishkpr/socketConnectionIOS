@@ -58,8 +58,8 @@
 }
 
 - (IBAction)bt_loginClicked:(id)sender {
-//    self.txt_password.text =@"password";
-//    self.txt_user.text =@"password@gmail.com";
+    self.txt_password.text =@"password";
+    self.txt_user.text =@"password@gmail.com";
     [self showMBProcess];
     if (![AppUtility isNetworkAvailable]) {
         [self hideMBProcess];
@@ -86,6 +86,7 @@
             UserRecord *user = result;
             user.userName = username;
             user.userPass = password;
+            shared.tocket = user.userToken;
             
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             [dict setValue:username forKeyPath:@"u_a"];

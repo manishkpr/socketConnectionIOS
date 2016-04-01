@@ -65,9 +65,7 @@
                                                                                                                   containerWithCenterViewController:nav
                                                                                                                   leftMenuViewController:leftview
                                                                                                                   rightMenuViewController:nil];
-//                                                                  self.view.window.rootViewController = container;
-                                                                  [self.navigationController pushViewController:container animated:YES];
-//                                                                  [self.navigationController setNavigationBarHidden:YES animated:NO];
+                                                                  self.view.window.rootViewController = container;
                                                                   
                                                               }];
         UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleDefault

@@ -7,75 +7,84 @@
 //
 
 #import "ListUserViewController.h"
-
+#import "ListUserViewCell.h"
+#import "ItemRecord.h"
 
 @implementation ListUserViewController
+{
+    NSTimer * timer;
+    double timerInterval;
+
+}
+@synthesize arrList;
 
 @dynamic tableView;
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.title =@"List User";
+   [self loadData];
+    
+    timerInterval = 2.0f;
     // Do any additional setup after loading the view.
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationItem setHidesBackButton:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.title =@"List User";
- 
-//    self.navigationItem.leftBarButtonItem = nil;
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [timer invalidate];
+}
+- (NSTimer *) timer {
+    if (!timer) {
+        timer = [NSTimer timerWithTimeInterval:timerInterval target:self selector:@selector(targetMethod) userInfo:nil repeats:YES];
+    }
+    return timer;
+}
+-(void)targetMethod{
+ [self loadData];
 }
 
+-(void)loadData {
+    static bool check = true;
+    if (check) {
+         [self showMBProcess];
+    }
+   
+     ShareData *shared = [ShareData instance];
+    [shared.userProxy getListUsers:^(id result, NSString *errorCode, NSString *message) {
+        if ([result count] >0) {
+            self.arrList  = result;
+            [self hideMBProcess];
+            [self.tableView reloadData];
+
+            return ;
+        }
+        [self hideMBProcess];
+        [self showAlertBox:Mesage_Titile message:@"Has not data"];
+        //code
+    } errorHandler:^(NSError *error) {
+        [self hideMBProcess];
+        [self showAlertBox:Mesage_Titile message:[NSString stringWithFormat:@"%@",error]];
+    }];
+    check =false;
+}
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//#warning Incomplete implementation, return the number of rows
+    if(self.arrList.count > 0){
+        return self.arrList.count;
+    }
+    
     return 0;
 }
+ - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+     ListUserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+     ItemRecord *rc = [self.arrList objectAtIndex:indexPath.row];
 
-//
-// - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//// UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-//// 
-// // Configure the cell...
-// 
-//// return cell;
-// }
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
+     cell.lb_userName.text =rc.name;
+     [cell loadImageFromURL:rc.avatar];
+     return cell;
  }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

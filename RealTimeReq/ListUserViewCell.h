@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lb_userName;
 @property (weak, nonatomic) IBOutlet UILabel *userEmail;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
-
+//@property (strong, nonatomic)  NSString *imageURL;
+- (void) loadImageFromURL:(NSString *)imageURL;
 @end

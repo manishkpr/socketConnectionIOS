@@ -16,4 +16,6 @@ completeHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler;
 
 - (void)doCreat:(NSString *)username Email:(NSString *)email password:(NSString *)password
 completeHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler;
+
+- (void)getListUsers:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler;
 @end

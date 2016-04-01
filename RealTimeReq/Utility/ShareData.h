@@ -18,6 +18,7 @@
 @property(nonatomic,retain) AppProxy *appProxy;
 @property(nonatomic,retain) UserProxy *userProxy;
 @property(nonatomic,retain) NSString *crUserEmail;
+@property(nonatomic,retain) NSString *tocket;
 
 + (ShareData *)instance;
 

@@ -9,7 +9,10 @@
 #import "BaseViewController.h"
 
 @interface ListUserViewController :  BaseViewController<UITabBarDelegate,UITableViewDataSource>
-@property (strong, nonatomic) NSArray *arrList;   // The list of help
-@property (strong, nonatomic) UITableView *tableView;  // The table view all help
+//@property (strong, nonatomic) UITableView *tableView;  // The table view all help
+@property (nonatomic, strong) IBOutlet UITableView * tableView;
+
+
+@property (strong, nonatomic) NSMutableArray *arrList;
 
 @end

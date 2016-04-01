@@ -9,9 +9,11 @@
 #import "UserProxy.h"
 #import "ShareData.h"
 #import "UserRecord.h"
+#import "ItemRecord.h"
 
 #define methodLogin         @"9000/auth/signin"
 #define methodCreate         @"9000/create"
+#define methodGetUsers         @"9000/users"
 
 @implementation UserProxy
 
@@ -92,7 +94,7 @@ completeHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler {
     NSString *postString = [NSString stringWithFormat:@"password=%@&email=%@&name=%@",password,email,username];
     
     [(NSMutableURLRequest*)callOp.request setHTTPMethod:@"POST"];
-    
+
     [(NSMutableURLRequest*)callOp.request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [(NSMutableURLRequest*)callOp.request setValue:[NSString stringWithFormat:@"%lu",(unsigned long)postString.length] forHTTPHeaderField:@"Content-Length"];
     
@@ -113,7 +115,7 @@ completeHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler {
 completionHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler {
     
     NSInteger httpCode = [(NSHTTPURLResponse*)response statusCode];
-    if(httpCode == 201 || httpCode == 400){
+    if(httpCode == 201 || httpCode == 200|| httpCode == 400){
         //    /*Login success*/
         NSError* error;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:result
@@ -131,6 +133,70 @@ completionHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler
         rc.userAvatar = StringFormat(@"%@",[userInfo objectForKey:@"avatar"]);
         NSString *errorCode = StringFormat(@"%@",error);;
         handler(rc, errorCode, @"");
+        
+    }else if (httpCode == 401){
+        NSError* error;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:result
+                                                             options:kNilOptions
+                                                               error:&error];
+        errHandler([json objectForKey:@"message"]);
+    }
+    else{
+        NSError *err = [[NSError alloc] initWithDomain:HTTPDOMAIN code:httpCode userInfo:nil];
+        errHandler(err);
+    }
+}
+
+
+#pragma mark GET LIST USERS
+- (void)getListUsers:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler {
+    
+    BaseOperation * callOp = [[BaseOperation alloc] init];
+    NSURL *url = [NSURL URLWithString:StringFormat(@"%@:%@",urlAPI, methodGetUsers)];
+    
+    callOp.request = [NSMutableURLRequest requestWithURL:url];
+    
+    [(NSMutableURLRequest*)callOp.request setHTTPMethod:@"GET"];
+    [(NSMutableURLRequest*)callOp.request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
+    ShareData *share = [ShareData instance];
+    
+    [(NSMutableURLRequest*)callOp.request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    NSString *header = [NSString stringWithFormat:@"m %@",share.tocket];
+    [(NSMutableURLRequest*)callOp.request setValue:header forHTTPHeaderField:@"Authorization"];
+
+    callOp.completionHandler = ^(NSData *result, NSURLResponse *res) {
+        [self endGetListUsers:result response:res completionHandler:handler errorHandler:errHandler];
+    };
+    
+    callOp.errorHandler = ^(NSError *err) {
+        errHandler(err);
+    };
+    
+    [callOp start];
+}
+
+- (void)endGetListUsers:(NSData *)result response:(NSURLResponse *)response
+completionHandler:(DidGetResultBlock)handler errorHandler:(ErrorBlock)errHandler {
+    
+    NSInteger httpCode = [(NSHTTPURLResponse*)response statusCode];
+    if(httpCode == 201 || httpCode == 200){
+        //    /*Login success*/
+        NSError* error;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:result
+                                                             options:kNilOptions
+                                                               error:&error];
+        NSMutableArray *mArray = [NSMutableArray array];
+        for(NSDictionary *d in json){
+            ItemRecord *rc = [[ItemRecord alloc] init];
+            rc.provider = StringFormat(@"%@",[d objectForKey:@"provider"]);
+            rc.name = StringFormat(@"%@",[d objectForKey:@"name"]);
+            rc.created = StringFormat(@"%@",[d objectForKey:@"created"]);
+            rc.email = StringFormat(@"%@",[d objectForKey:@"email"]);
+            rc.avatar = StringFormat(@"%@",[d objectForKey:@"avatar"]);
+            rc.salt= StringFormat(@"%@",[d objectForKey:@"salt"]);
+            [mArray addObject:rc];
+        }
+        handler( [[mArray reverseObjectEnumerator] allObjects], [NSString stringWithFormat:@"%ld",(long)httpCode], @"");
         
     }else if (httpCode == 401){
         NSError* error;

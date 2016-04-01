@@ -10,6 +10,7 @@
 @implementation ShareData
 @synthesize appProxy;
 @synthesize userProxy;
+@synthesize tocket;
 //Uer
 @synthesize crUserEmail;
 
