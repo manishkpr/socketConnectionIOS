@@ -5,3 +5,11 @@
   Created by admin on 3/30/16.
   Copyright © 2016 admin. All rights reserved.
 */
+
+
+"not_connect"="NOT CONNECT";
+"cancel" ="CANCEL";
+"reset_new_watch"="Connect new watch";
+"yes_SHORT" ="Yes";
+"no_SHORT" ="No";
+

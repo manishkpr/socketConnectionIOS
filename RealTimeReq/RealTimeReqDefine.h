@@ -35,14 +35,14 @@
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 
-#define Mesage_Network @"Kết nối thất bại, Vui lòng kiểm tra lại đường truyền"
+#define Mesage_Network @"Cannot connect to server, check your network and try again"
 //Login
-#define Mesage_Titile @"Thông báo"
-#define Mesage_Login_Empty @"Vui lòng nhập user name và mật khẩu"
-#define Mesage_Create_Empty @"Vui lòng nhập user name và mật khẩu"
-#define Mesage_Login_Error @"UserName hoặc mật khẩu không đúng"
-#define Mesage_DataEmpty @"Không tìm thấy kết quả"
-#define TitleNotification @"Thông báo"
+#define Mesage_Titile @"Mesage"
+#define Mesage_Login_Empty @"Check your email and pass"
+#define Mesage_Create_Empty @"Check your input please"
+#define Mesage_Login_Error @"UserName password incorrec"
+#define Mesage_DataEmpty @"have not data"
+#define TitleNotification @"Mesage"
 #define PHOTO_GALLARY_TAG 1000
 #define NO_IMAGE @"no_image"
 #define IMAGE_FOLDER [NSTemporaryDirectory()  stringByAppendingPathComponent:@"images"]

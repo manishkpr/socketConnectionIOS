@@ -5,3 +5,11 @@
   Created by admin on 3/30/16.
   Copyright © 2016 admin. All rights reserved.
 */
+
+
+"connect"="CONNECT";
+"cancel" ="Không";
+"reset_new_watch"="Connect new watch";
+"yes_SHORT" ="Có";
+"no_SHORT" ="Không";
+
